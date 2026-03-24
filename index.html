@@ -324,7 +324,7 @@
         </button>
         <button class="tab-pill" onclick="goTo('page-specials')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Today's Specials
+          Rewards
         </button>
         <button class="tab-pill" onclick="goTo('page-kitchen')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
@@ -757,10 +757,11 @@
               <div style="font-size:15px;font-weight:700;color:var(--dark);">Vinny's 🥗</div>
               <div style="font-size:18px;color:var(--dark);">›</div>
             </div>
-            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">My go-to order · Personal</div>
-            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Caesar Wrap · Caesar Wrap (because once is never enough)</div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">My go-to DoorDash order · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Caesar Wrap — my forever order. I've never once ordered anything else.</div>
+            <div id="fact-1" style="display:none;background:#fff5f4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;color:var(--dark);line-height:1.5;">🥗 <strong>Fun fact:</strong> I'm from Tampa and Vinny's is my go-to spot. The Caesar Wrap is so good I've never felt the need to try anything else on the menu.</div>
             <div style="display:flex;gap:8px;">
-              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button onclick="toggleFact('fact-1', this)" style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
               <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
             </div>
           </div>
@@ -773,9 +774,10 @@
               <div style="font-size:18px;color:var(--dark);">›</div>
             </div>
             <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Craziest meal I've ever had · Personal</div>
-            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Avant-garde tasting menu · 3 Michelin stars · David Muñoz</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">3 Michelin stars · Chef David Muñoz · Madrid, Spain. An experience like nothing else.</div>
+            <div id="fact-2" style="display:none;background:#fff5f4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;color:var(--dark);line-height:1.5;">✈️ <strong>Fun fact:</strong> I ate out of an ox horn — and when I finished, they made me blow it. In the middle of the restaurant. I did it.</div>
             <div style="display:flex;gap:8px;">
-              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button onclick="toggleFact('fact-2', this)" style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
               <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
             </div>
           </div>
@@ -788,9 +790,10 @@
               <div style="font-size:18px;color:var(--dark);">›</div>
             </div>
             <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Daily habit · Personal</div>
-            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Pilates · NYC Marathon (on the bucket list) · Early mornings</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">I like to stay active. Pilates is my go-to and running keeps me grounded.</div>
+            <div id="fact-3" style="display:none;background:#fff5f4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;color:var(--dark);line-height:1.5;">🏃‍♀️ <strong>Fun fact:</strong> Running the NYC Marathon is on my bucket list. It's not a matter of if — just when.</div>
             <div style="display:flex;gap:8px;">
-              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button onclick="toggleFact('fact-3', this)" style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
               <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
             </div>
           </div>
@@ -803,9 +806,10 @@
               <div style="font-size:18px;color:var(--dark);">›</div>
             </div>
             <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Upcoming order · Personal</div>
-            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Engaged · Fiancé is a private chef · Food is a love language here</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Getting married in September 2027. Food will obviously be exceptional.</div>
+            <div id="fact-4" style="display:none;background:#fff5f4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;color:var(--dark);line-height:1.5;">💍 <strong>Fun fact:</strong> I'm engaged! Getting married in September 2027. My fiancé is a private chef — so food is absolutely a love language in our home.</div>
             <div style="display:flex;gap:8px;">
-              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button onclick="toggleFact('fact-4', this)" style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
               <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
             </div>
           </div>
@@ -818,9 +822,10 @@
               <div style="font-size:18px;color:var(--dark);">›</div>
             </div>
             <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Monthly · Personal</div>
-            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Fantasy · Historical fiction · Classic lit · Monthly social events</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">I'll read anything — fantasy, historical fiction, classic literature. All genres welcome.</div>
+            <div id="fact-5" style="display:none;background:#fff5f4;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;color:var(--dark);line-height:1.5;">📚 <strong>Fun fact:</strong> I'm part of a social book club where we read a new book every month and also do activities together — trying new restaurants, hands-on experiences, and more. Best of both worlds.</div>
             <div style="display:flex;gap:8px;">
-              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button onclick="toggleFact('fact-5', this)" style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
               <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
             </div>
           </div>
@@ -1630,6 +1635,14 @@
       btnB.style.background = 'var(--dark)'; btnB.style.color = 'white';
       btnP.style.background = 'var(--light)'; btnP.style.color = 'var(--dark)';
     }
+  }
+
+  function toggleFact(id, btn) {
+    const el = document.getElementById(id);
+    const isOpen = el.style.display === 'block';
+    el.style.display = isOpen ? 'none' : 'block';
+    btn.style.background = isOpen ? 'var(--light)' : '#fff5f4';
+    btn.style.color = isOpen ? 'var(--dark)' : 'var(--red)';
   }
 
   function goBack() {
