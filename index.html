@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anne Teti — DoorDash Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #FF3008;
+    --dark: #1a1a1a;
+    --gray: #767676;
+    --light: #f5f5f5;
+    --border: #e8e8e8;
+    --white: #ffffff;
+    --green: #3d8c40;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+
+  body {
+    background: #e0ddd9;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* ── PHONE SHELL ── */
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow:
+      0 0 0 10px #1a1a1a,
+      0 0 0 12px #444,
+      0 30px 80px rgba(0,0,0,0.45);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NOTCH ── */
+  .notch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 126px; height: 36px;
+    background: #1a1a1a;
+    border-radius: 0 0 22px 22px;
+    z-index: 200;
+  }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+  .status-time { font-size: 15px; font-weight: 800; letter-spacing: -0.5px; padding-top: 8px; }
+  .status-icons { display: flex; align-items: center; gap: 5px; padding-top: 8px; }
+  .signal-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+  .signal-bars span { width: 3px; background: var(--dark); border-radius: 1px; }
+  .signal-bars span:nth-child(1) { height: 4px; opacity: 0.35; }
+  .signal-bars span:nth-child(2) { height: 7px; opacity: 0.35; }
+  .signal-bars span:nth-child(3) { height: 10px; }
+  .signal-bars span:nth-child(4) { height: 12px; }
+  .battery { display: flex; align-items: center; gap: 1px; }
+  .battery-body { width: 22px; height: 11px; border: 1.5px solid var(--dark); border-radius: 3px; padding: 1.5px; }
+  .battery-fill { width: 75%; height: 100%; background: var(--dark); border-radius: 1px; }
+  .battery-tip { width: 3px; height: 5px; background: var(--dark); border-radius: 0 1px 1px 0; }
+
+  /* ── PAGES ── */
+  .pages { flex: 1; overflow: hidden; position: relative; }
+
+  .page {
+    position: absolute; inset: 0;
+    overflow-y: auto;
+    background: var(--white);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+    scrollbar-width: none;
+  }
+  .page::-webkit-scrollbar { display: none; }
+  .page.active { transform: translateX(0); }
+  .page.behind { transform: translateX(-25%); }
+
+  /* ── TOP NAV ── */
+  .top-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px 8px;
+  }
+  .nav-back {
+    width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--dark); cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-back:hover { background: var(--light); }
+  .avatar {
+    width: 46px; height: 46px; border-radius: 50%; background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: white;
+    box-shadow: 0 0 0 2.5px white, 0 0 0 4.5px #ddd;
+    cursor: pointer;
+  }
+  .nav-right { display: flex; gap: 10px; align-items: center; }
+  .nav-icon {
+    width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; transition: background 0.15s;
+  }
+  .nav-icon:hover { background: var(--light); }
+  .notif-dot {
+    position: absolute; top: 5px; right: 5px;
+    width: 8px; height: 8px; background: var(--red); border-radius: 50%; border: 2px solid white;
+  }
+
+  /* ── HOME ── */
+  .profile-center { text-align: center; padding: 2px 24px 16px; }
+  .name-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 3px; }
+  .name { font-size: 22px; font-weight: 800; color: var(--dark); letter-spacing: -0.4px; }
+  .chevron { font-size: 12px; color: var(--dark); }
+  .since { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .tagline { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+  /* pill tabs */
+  .tab-row {
+    display: flex; gap: 8px;
+    overflow-x: auto; padding: 0 20px 4px;
+    scrollbar-width: none;
+  }
+  .tab-row::-webkit-scrollbar { display: none; }
+  .tab-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--light); border: none; border-radius: 100px;
+    padding: 10px 15px; white-space: nowrap; flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--dark);
+    cursor: pointer; transition: background 0.15s, transform 0.1s;
+  }
+  .tab-pill:hover { background: #e5e5e5; }
+  .tab-pill:active { transform: scale(0.97); }
+  .tab-pill svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  .divider { height: 8px; background: var(--light); }
+  .thin-divider { height: 1px; background: var(--border); margin: 0 20px; }
+
+  /* hire banner */
+  .hire-banner {
+    background: linear-gradient(135deg, #FF3008 0%, #c9230c 100%);
+    border-radius: 18px; padding: 20px 18px 16px;
+    margin: 16px 20px 0; position: relative; overflow: hidden;
+  }
+  .hire-banner::before {
+    content: ''; position: absolute; top: -35px; right: -35px;
+    width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.07);
+  }
+  .hire-headline { font-size: 15px; font-weight: 800; color: white; line-height: 1.35; margin-bottom: 7px; position: relative; z-index: 1; }
+  .hire-sub { font-size: 12.5px; color: rgba(255,255,255,0.88); line-height: 1.55; margin-bottom: 12px; position: relative; z-index: 1; }
+  .hire-pills { display: flex; flex-wrap: wrap; gap: 6px; position: relative; z-index: 1; }
+  .hire-pill {
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    color: white; font-size: 11px; font-weight: 600; border-radius: 100px; padding: 3px 10px;
+  }
+
+  /* stats */
+  .stats-row {
+    display: flex; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin: 14px 0 0;
+  }
+  .stat { flex: 1; padding: 12px 6px; text-align: center; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-size: 19px; font-weight: 800; color: var(--dark); }
+  .stat-label { font-size: 10px; color: var(--gray); margin-top: 2px; }
+
+  /* section */
+  .section { padding: 18px 20px 4px; }
+  .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .section-title { font-size: 21px; font-weight: 800; color: var(--dark); letter-spacing: -0.3px; }
+  .arr-btn {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--light);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; transition: background 0.15s;
+  }
+  .arr-btn:hover { background: #e0e0e0; }
+
+  /* circles */
+  .circles-scroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 18px; scrollbar-width: none; }
+  .circles-scroll::-webkit-scrollbar { display: none; }
+  .circle-item { display: flex; flex-direction: column; align-items: center; gap: 7px; flex-shrink: 0; }
+  .circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 2px dashed #d8d8d8; background: #fafafa;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .circle:hover { border-color: #aaa; transform: scale(1.05); }
+  .circle-inner { font-size: 9.5px; font-weight: 600; color: #ccc; text-align: center; line-height: 1.4; padding: 8px; }
+  .circle-badge {
+    position: absolute; top: 2px; right: 2px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--red); border: 2px solid white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: white;
+  }
+  .circle-name { font-size: 12.5px; font-weight: 600; color: var(--dark); text-align: center; max-width: 80px; }
+  .circle-sub { font-size: 11.5px; color: var(--gray); text-align: center; margin-top: -4px; }
+
+  /* explore cards */
+  .cards-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; }
+  .cards-scroll::-webkit-scrollbar { display: none; }
+  .nav-card {
+    flex-shrink: 0; width: 150px; background: var(--white);
+    border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .nav-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .nav-card:active { transform: scale(0.97); }
+  .card-img { height: 84px; display: flex; align-items: center; justify-content: center; font-size: 34px; }
+  .red-bg { background: var(--red); }
+  .dark-bg { background: var(--dark); }
+  .green-bg { background: var(--green); }
+  .warm-bg { background: #f5efe8; }
+  .card-body { padding: 9px 12px 11px; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 1px; }
+  .card-sub { font-size: 11px; color: var(--gray); }
+
+  /* ── INNER PAGES ── */
+  .inner-nav {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: white; z-index: 50;
+  }
+  .back-btn {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--light);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 17px; color: var(--dark); flex-shrink: 0; transition: background 0.15s;
+  }
+  .back-btn:hover { background: #e0e0e0; }
+  .inner-title { font-size: 17px; font-weight: 800; color: var(--dark); letter-spacing: -0.3px; }
+
+  .page-body { padding: 20px; }
+
+  .placeholder {
+    background: var(--light); border-radius: 16px; padding: 32px 20px;
+    text-align: center; border: 2px dashed var(--border); margin-bottom: 16px;
+  }
+  .placeholder-icon { font-size: 40px; margin-bottom: 10px; }
+  .placeholder-title { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .placeholder-sub { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="notch"></div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-time">9:41</div>
+    <div class="status-icons">
+      <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
+      <svg width="15" height="11" viewBox="0 0 24 18" fill="none">
+        <path d="M12 14.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/>
+        <path d="M6.5 10.5C8 9 10 8 12 8s4 1 5.5 2.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M2.5 6.5C5.5 3.5 8.5 2 12 2s6.5 1.5 9.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="battery">
+        <div class="battery-body"><div class="battery-fill"></div></div>
+        <div class="battery-tip"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pages">
+
+    <!-- ══════════ HOME ══════════ -->
+    <div class="page active" id="page-home">
+
+      <div class="top-nav">
+        <button class="nav-back">←</button>
+        <div class="avatar">A</div>
+        <div class="nav-right">
+          <button class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <div class="notif-dot"></div>
+          </button>
+          <button class="nav-icon">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-center">
+        <div class="name-row"><span class="name">Anne Teti</span><span class="chevron">∨</span></div>
+        <div class="since">DoorDash customer since Jan '23</div>
+        <div class="tagline">Tap below to explore why Anne<br>belongs on the DoorDash team.</div>
+      </div>
+
+      <!-- Tab pills -->
+      <div class="tab-row">
+        <button class="tab-pill" onclick="goTo('page-orders')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Orders
+        </button>
+        <button class="tab-pill" onclick="goTo('page-bag')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          In My Bag
+        </button>
+        <button class="tab-pill" onclick="goTo('page-specials')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Today's Specials
+        </button>
+        <button class="tab-pill" onclick="goTo('page-kitchen')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+          My Kitchen
+        </button>
+      </div>
+
+      <div class="divider" style="margin-top:10px;"></div>
+
+      <!-- Hire banner -->
+      <div class="hire-banner">
+        <div class="hire-headline">Hire me as Senior Manager,<br>Consumer Experience S&amp;O</div>
+        <div class="hire-sub">8+ years building consumer products and scaling them. Ready to bring AI-forward strategy to DoorDash's marketplace.</div>
+        <div class="hire-pills">
+          <span class="hire-pill">First-principles</span>
+          <span class="hire-pill">Cross-functional</span>
+          <span class="hire-pill">SQL &amp; Excel</span>
+          <span class="hire-pill">AI-forward</span>
+          <span class="hire-pill">5+ yrs managing</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Years exp.</div></div>
+        <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Yrs managing</div></div>
+        <div class="stat"><div class="stat-num">🚀</div><div class="stat-label">Launch specialist</div></div>
+      </div>
+
+      <div class="divider" style="margin-top:0;"></div>
+
+      <!-- Kitchen Tools -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Kitchen Tools</div>
+          <button class="arr-btn" onclick="goTo('page-kitchen')">→</button>
+        </div>
+        <!-- Dark scrollable tool chips -->
+        <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:16px;scrollbar-width:none;">
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">📧</span><span style="font-size:12px;font-weight:600;color:white;">Braze</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">📨</span><span style="font-size:12px;font-weight:600;color:white;">Klaviyo</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">🧠</span><span style="font-size:12px;font-weight:600;color:white;">Hightouch</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">🗃️</span><span style="font-size:12px;font-weight:600;color:white;">SQL</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">📊</span><span style="font-size:12px;font-weight:600;color:white;">Looker</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">🎨</span><span style="font-size:12px;font-weight:600;color:white;">Figma</span>
+          </div>
+          <div style="flex-shrink:0;background:#1a1a1a;border-radius:100px;padding:7px 13px;display:flex;align-items:center;gap:5px;">
+            <span style="font-size:12px;">⚡</span><span style="font-size:12px;font-weight:600;color:white;">Dynamic Yield</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Recently Viewed -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Recently Viewed</div>
+          <button class="arr-btn">→</button>
+        </div>
+        <div class="cards-scroll">
+
+          <!-- e.l.f. Beauty -->
+          <div class="nav-card" onclick="goTo('page-brand-elf')">
+            <div class="card-img" style="background:#1a1a1a;flex-direction:column;gap:2px;">
+              <span style="color:white;font-size:13px;font-weight:800;letter-spacing:-0.3px;line-height:1.2;text-align:center;">e.l.f.<br>BEAUTY</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">e.l.f. Beauty</div>
+              <div class="card-sub">CRM &amp; Email Marketing</div>
+              <div style="font-size:10px;color:var(--red);font-weight:700;margin-top:3px;">Current · 4 yrs 6 mos</div>
+            </div>
+          </div>
+
+          <!-- Purple -->
+          <div class="nav-card" onclick="goTo('page-brand-purple')">
+            <div class="card-img" style="background:#6B47DC;">
+              <span style="color:white;font-size:15px;font-weight:800;">purple</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">Purple</div>
+              <div class="card-sub">Email Marketing</div>
+              <div style="font-size:10px;color:var(--gray);font-weight:600;margin-top:3px;">1 yr 3 mos</div>
+            </div>
+          </div>
+
+          <!-- ZAGG -->
+          <div class="nav-card" onclick="goTo('page-brand-zagg')">
+            <div class="card-img" style="background:#c0392b;">
+              <span style="color:white;font-size:15px;font-weight:800;letter-spacing:1px;">ZAGG</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">ZAGG, Inc.</div>
+              <div class="card-sub">CX &amp; Loyalty</div>
+              <div style="font-size:10px;color:var(--gray);font-weight:600;margin-top:3px;">3 yrs 2 mos</div>
+            </div>
+          </div>
+
+          <!-- LuMee -->
+          <div class="nav-card" onclick="goTo('page-brand-lumee')">
+            <div class="card-img" style="background:#e8e8e8;">
+              <span style="color:#333;font-size:14px;font-weight:800;">LuMee</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">LuMee</div>
+              <div class="card-sub">Brand Manager</div>
+              <div style="font-size:10px;color:var(--gray);font-weight:600;margin-top:3px;">1 yr 1 mo</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /home -->
+
+    <!-- ══════════════════════════════════
+         BRAND: E.L.F. BEAUTY
+    ══════════════════════════════════ -->
+    <div class="page" id="page-brand-elf">
+      <div style="position:relative;height:200px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="text-align:center;">
+          <div style="font-size:36px;font-weight:800;color:white;letter-spacing:-0.5px;line-height:1.1;">e.l.f.</div>
+          <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:2px;">BEAUTY</div>
+        </div>
+        <div style="position:absolute;top:14px;left:14px;">
+          <button class="back-btn" onclick="goBack()" style="background:rgba(255,255,255,0.15);color:white;">←</button>
+        </div>
+        <div style="position:absolute;top:14px;right:14px;display:flex;gap:8px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">♡</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">↑</div>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;">
+        <div style="padding:18px 20px 12px;">
+          <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px;">e.l.f. Beauty</div>
+          <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">CRM &amp; Email Marketing Manager · Oct 2021 – Present</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="background:rgba(255,48,8,0.08);color:var(--red);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;">Current Role</div>
+            <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">New York</div>
+            <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">4 yrs 6 mos</div>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:0 20px;"></div>
+        <div style="padding:16px 20px 8px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">What I did</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Built a <strong>360° connected customer journey</strong> spanning email, SMS, push, in-app messaging, and site personalization — every touchpoint integrated and working together</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;"><strong>Lead and manage a team</strong> running the lifecycle program behind 80% of e.l.f.'s DTC revenue across all owned channels</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Build and manage <strong>AI-powered audience segments</strong> in Hightouch: churn prediction, purchase propensity, next best action, VIP/loyalty tiers, and new customer onboarding</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Own in-app and website consumer experience end-to-end, working directly with <strong>product and engineering</strong> to design, test, and ship features</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Identified drop-off between 1st and 2nd purchase, used AI to build 7+ behavioral cohorts — drove <strong>5% conversion lift and $500K+</strong> incremental revenue</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Grew monthly mobile app usage <strong>125% in 6 months</strong> with a push opt-in strategy hitting 23% conversion — push-enabled users average 500% more daily sessions</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Built cross-channel loyalty journeys for <strong>Beauty Squad (5.3M+ members)</strong> driving a 58% YoY jump in offer redemptions</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.6;">Connected lifecycle campaigns to retail partner sites through custom landing pages across <strong>Target, Walmart, and Ulta</strong></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:16px 20px 28px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Awards &amp; Press</div>
+          <a href="https://www.braze.com/resources/articles/2024-torchie-awards-winners" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:12px 16px;text-decoration:none;margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);">🏆 2024 Torchie Award Winner</div>
+            <div style="color:var(--red);font-weight:700;">↗</div>
+          </a>
+          <a href="https://www.glossy.co/beauty/how-e-l-f-cosmetics-drove-a-125-increase-in-monthly-active-app-users/" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:12px 16px;text-decoration:none;margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);">📰 Glossy — 125% app growth</div>
+            <div style="color:var(--red);font-weight:700;">↗</div>
+          </a>
+          <a href="https://www.braze.com/customers/elf-case-study" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:12px 16px;text-decoration:none;">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);">📋 Braze Case Study</div>
+            <div style="color:var(--red);font-weight:700;">↗</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         BRAND: PURPLE
+    ══════════════════════════════════ -->
+    <div class="page" id="page-brand-purple">
+      <div style="position:relative;height:200px;background:linear-gradient(135deg,#6B47DC,#4a2fa8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="font-size:28px;font-weight:800;color:white;letter-spacing:-0.5px;">purple</div>
+        <div style="position:absolute;top:14px;left:14px;">
+          <button class="back-btn" onclick="goBack()" style="background:rgba(255,255,255,0.15);color:white;">←</button>
+        </div>
+        <div style="position:absolute;top:14px;right:14px;display:flex;gap:8px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">♡</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">↑</div>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;padding:18px 20px 32px;">
+        <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px;">Purple</div>
+        <div style="font-size:13px;color:var(--gray);margin-bottom:12px;">Email Marketing Manager – Retention · Aug 2020 – Oct 2021</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Lehi, Utah</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">1 yr 3 mos</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">What I did</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Drove <strong>acquisition during COVID</strong> using non-traditional channels including direct mail and Updater — targeting new movers actively shopping for home products</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Launched a <strong>refer-a-friend retention program</strong> using a specialized platform that drove measurable repeat purchase growth</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Partnered with the <strong>packaging team</strong> to build custom post-purchase flows that set clear delivery expectations and reduced customer anxiety</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Worked with the <strong>site team</strong> to A/B test upsell offers including white glove delivery upgrades, turning post-purchase moments into revenue opportunities</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;"><strong>Managed cross-functional vendor and agency relationships</strong> across acquisition, retention, and packaging teams to deliver a cohesive consumer experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         BRAND: ZAGG
+    ══════════════════════════════════ -->
+    <div class="page" id="page-brand-zagg">
+      <div style="position:relative;height:200px;background:linear-gradient(135deg,#c0392b,#922b21);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="font-size:32px;font-weight:800;color:white;letter-spacing:2px;">ZAGG</div>
+        <div style="position:absolute;top:14px;left:14px;">
+          <button class="back-btn" onclick="goBack()" style="background:rgba(255,255,255,0.15);color:white;">←</button>
+        </div>
+        <div style="position:absolute;top:14px;right:14px;display:flex;gap:8px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">♡</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">↑</div>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;padding:18px 20px 32px;">
+        <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px;">ZAGG, Inc.</div>
+        <div style="font-size:13px;color:var(--gray);margin-bottom:12px;">2 roles · Jul 2017 – Aug 2020 · 3 yrs 2 mos</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Tustin, CA</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Global consumer electronics</div>
+        </div>
+
+        <!-- Role 1 -->
+        <div style="font-size:13px;font-weight:800;color:var(--dark);margin-bottom:4px;">CX Insights &amp; Loyalty Manager</div>
+        <div style="font-size:12px;color:var(--gray);margin-bottom:12px;">2018 – Aug 2020</div>
+        <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">What I did</div>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Managed <strong>Amazon Seller and Vendor accounts</strong> for a global consumer electronics brand, owning the full marketplace presence</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Used <strong>Qualtrics</strong> to capture and analyze customer sentiment, then translated those insights directly into marketing messages and campaign strategy</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Developed <strong>loyalty segmentation programs</strong> that deepened customer relationships and drove repeat purchases across global markets</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;"><strong>Led a team</strong> across CX, insights, and social functions — coordinating strategy across multiple channels and stakeholders</div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px;background:var(--border);margin-bottom:20px;"></div>
+
+        <!-- Role 2 -->
+        <div style="font-size:13px;font-weight:800;color:var(--dark);margin-bottom:4px;">Social Media &amp; Consumer Insights Coordinator</div>
+        <div style="font-size:12px;color:var(--gray);margin-bottom:12px;">Jul 2017 – Jul 2018</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Analyzed social and consumer data to surface <strong>insights that shaped brand strategy</strong> and content direction</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Supported cross-functional teams with <strong>consumer research, competitive analysis</strong>, and performance reporting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         BRAND: LUMEE
+    ══════════════════════════════════ -->
+    <div class="page" id="page-brand-lumee">
+      <div style="position:relative;height:200px;background:linear-gradient(135deg,#ddd,#bbb);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="font-size:28px;font-weight:800;color:#333;">LuMee</div>
+        <div style="position:absolute;top:14px;left:14px;">
+          <button class="back-btn" onclick="goBack()" style="background:rgba(0,0,0,0.1);color:#333;">←</button>
+        </div>
+        <div style="position:absolute;top:14px;right:14px;display:flex;gap:8px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;color:#333;font-size:16px;">♡</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;color:#333;font-size:16px;">↑</div>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;padding:18px 20px 32px;">
+        <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px;">LuMee</div>
+        <div style="font-size:13px;color:var(--gray);margin-bottom:12px;">Brand Manager (Contract) · Jan 2019 – Jan 2020</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Park City, Utah</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Contract</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Consumer tech accessories</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">What I did</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Joined a <strong>celebrity-founded consumer tech startup</strong> as the brand lead, owning everything from day one</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Managed all <strong>social media, website, and marketing communications</strong> end-to-end — full brand ownership with no playbook</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Built the brand voice and go-to-market strategy from scratch in a <strong>fast-moving startup environment</strong></div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;"><strong>Managed all internal and external stakeholders</strong> — coordinating across creative, agency, and leadership with no existing playbook</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         BRAND: KEEL & CURLEY
+    ══════════════════════════════════ -->
+    <div class="page" id="page-brand-keel">
+      <div style="position:relative;height:200px;background:linear-gradient(135deg,#2ecc71,#1a9950);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:white;line-height:1.3;">Keel &amp; Curley<br>Winery</div>
+        </div>
+        <div style="position:absolute;top:14px;left:14px;">
+          <button class="back-btn" onclick="goBack()" style="background:rgba(255,255,255,0.2);color:white;">←</button>
+        </div>
+        <div style="position:absolute;top:14px;right:14px;display:flex;gap:8px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">♡</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;">↑</div>
+        </div>
+      </div>
+      <div style="overflow-y:auto;flex:1;padding:18px 20px 32px;">
+        <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:4px;">Keel &amp; Curley Winery</div>
+        <div style="font-size:13px;color:var(--gray);margin-bottom:12px;">Marketing &amp; Event Manager · Oct 2016 – Jun 2017</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">Tampa, FL</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">First marketing role</div>
+          <div style="background:var(--light);color:var(--dark);font-size:11px;font-weight:600;border-radius:100px;padding:4px 12px;">9 mos</div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">What I did</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Managed <strong>marketing strategy and brand presence</strong> for a local Tampa winery</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <div style="color:var(--red);font-size:16px;flex-shrink:0;margin-top:1px;">•</div>
+            <div style="font-size:13px;color:var(--dark);line-height:1.6;">Planned and executed <strong>consumer-facing events</strong> to drive brand awareness and community engagement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══════════ ORDERS ══════════ -->
+    <div class="page" id="page-orders">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">Orders</div>
+      </div>
+      <div class="page-body" style="padding:16px 20px;">
+
+        <!-- Intro -->
+        <div style="margin-bottom:18px;">
+          <div style="font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-0.4px;margin-bottom:6px;">Completed</div>
+        </div>
+
+        <!-- Personal / Business toggle -->
+        <div style="display:flex;gap:8px;margin-bottom:22px;">
+          <button id="tab-personal" onclick="switchOrderTab('personal')" style="background:var(--dark);color:white;border:none;border-radius:100px;padding:9px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Personal</button>
+          <button id="tab-business" onclick="switchOrderTab('business')" style="background:var(--light);color:var(--dark);border:none;border-radius:100px;padding:9px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Business</button>
+        </div>
+
+        <!-- PERSONAL TAB -->
+        <div id="orders-personal">
+
+          <!-- Order 1 -->
+          <div style="font-size:20px;font-weight:800;color:var(--dark);margin-bottom:12px;">Tampa, FL</div>
+          <div style="border-top:1px solid var(--border);padding:14px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">Vinny's 🥗</div>
+              <div style="font-size:18px;color:var(--dark);">›</div>
+            </div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">My go-to order · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Caesar Wrap · Caesar Wrap (because once is never enough)</div>
+            <div style="display:flex;gap:8px;">
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
+            </div>
+          </div>
+
+          <!-- Order 2 -->
+          <div style="font-size:20px;font-weight:800;color:var(--dark);margin:14px 0 12px;">Madrid, Spain</div>
+          <div style="border-top:1px solid var(--border);padding:14px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">DiverXO ✈️</div>
+              <div style="font-size:18px;color:var(--dark);">›</div>
+            </div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Craziest meal I've ever had · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Avant-garde tasting menu · 3 Michelin stars · David Muñoz</div>
+            <div style="display:flex;gap:8px;">
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
+            </div>
+          </div>
+
+          <!-- Order 3 -->
+          <div style="font-size:20px;font-weight:800;color:var(--dark);margin:14px 0 12px;">The Studio</div>
+          <div style="border-top:1px solid var(--border);padding:14px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">Pilates &amp; Running 🏃‍♀️</div>
+              <div style="font-size:18px;color:var(--dark);">›</div>
+            </div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Daily habit · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Pilates · NYC Marathon (on the bucket list) · Early mornings</div>
+            <div style="display:flex;gap:8px;">
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
+            </div>
+          </div>
+
+          <!-- Order 4 -->
+          <div style="font-size:20px;font-weight:800;color:var(--dark);margin:14px 0 12px;">September 2027</div>
+          <div style="border-top:1px solid var(--border);padding:14px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">Wedding Day 💍</div>
+              <div style="font-size:18px;color:var(--dark);">›</div>
+            </div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Upcoming order · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Engaged · Fiancé is a private chef · Food is a love language here</div>
+            <div style="display:flex;gap:8px;">
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
+            </div>
+          </div>
+
+          <!-- Order 5 -->
+          <div style="font-size:20px;font-weight:800;color:var(--dark);margin:14px 0 12px;">The Book Club</div>
+          <div style="border-top:1px solid var(--border);padding:14px 0 4px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">Social Club &amp; Reading 📚</div>
+              <div style="font-size:18px;color:var(--dark);">›</div>
+            </div>
+            <div style="font-size:13px;color:var(--gray);margin-bottom:6px;">Monthly · Personal</div>
+            <div style="font-size:13px;color:var(--dark);margin-bottom:10px;">Fantasy · Historical fiction · Classic lit · Monthly social events</div>
+            <div style="display:flex;gap:8px;">
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">📋 Fun fact</button>
+              <button style="display:flex;align-items:center;gap:5px;background:var(--light);border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;">↺ Reorder</button>
+            </div>
+          </div>
+
+        </div><!-- /personal -->
+
+        <!-- BUSINESS TAB -->
+        <div id="orders-business" style="display:none;">
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:13px;font-weight:700;color:var(--red);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:4px;">The Stats</div>
+            <div style="font-size:20px;font-weight:800;color:var(--dark);letter-spacing:-0.3px;line-height:1.3;">Here's what's in <span style="color:var(--red);">my order.</span></div>
+            <div style="font-size:13px;color:var(--gray);margin-top:6px;line-height:1.5;">Eight years of work, distilled into a receipt. Every number is real.</div>
+          </div>
+
+          <!-- Receipt card -->
+          <div style="background:white;border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,0.07);overflow:hidden;margin-bottom:20px;">
+
+            <!-- Receipt header -->
+            <div style="padding:18px 18px 12px;text-align:center;border-bottom:1px dashed #ddd;">
+              <div style="font-size:10px;font-weight:600;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Order #DD-2025-NOW &#xB7; Consumer Experience</div>
+              <div style="font-size:18px;font-weight:800;color:var(--dark);">ANNE TETI</div>
+              <div style="font-size:12px;color:var(--gray);margin-top:2px;">Senior Manager, Consumer Experience S&amp;O</div>
+            </div>
+
+            <!-- Line items -->
+            <div style="padding:14px 18px;">
+
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">DTC revenue driven by lifecycle</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">80%</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">Years of total experience</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">8 yrs</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">App usage growth in 6 months</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">+125%</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">Loyalty redemption lift YoY</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">+58%</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">Revenue from 1 AI program</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">$500K+</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">Push opt-in conversion rate</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">23%</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">AI behavioral cohorts built</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">7+ types</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed #ddd;">
+                <div style="font-size:13px;color:var(--dark);">Replay social share rate</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">25%</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f5f5f5;">
+                <div style="font-size:13px;color:var(--dark);">Channels owned simultaneously</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">5</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed #ddd;">
+                <div style="font-size:13px;color:var(--dark);">Years managing teams</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">5+</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;">
+                <div style="font-size:13px;font-weight:700;color:var(--dark);">Industry recognition</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red);">🏆 Torchie '24</div>
+              </div>
+            </div>
+
+            <!-- Receipt footer -->
+            <div style="padding:12px 18px 16px;text-align:center;border-top:1px dashed #ddd;">
+              <div style="font-size:10px;font-weight:600;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Thank you for your order</div>
+              <div style="display:flex;justify-content:center;gap:1px;">
+                <!-- barcode simulation -->
+                <svg width="200" height="28" viewBox="0 0 200 28">
+                  <g fill="#1a1a1a">
+                    <rect x="0" y="0" width="2" height="28"/><rect x="4" y="0" width="1" height="28"/><rect x="7" y="0" width="3" height="28"/><rect x="12" y="0" width="1" height="28"/><rect x="15" y="0" width="2" height="28"/><rect x="19" y="0" width="1" height="28"/><rect x="22" y="0" width="3" height="28"/><rect x="27" y="0" width="1" height="28"/><rect x="30" y="0" width="2" height="28"/><rect x="34" y="0" width="1" height="28"/><rect x="37" y="0" width="3" height="28"/><rect x="42" y="0" width="2" height="28"/><rect x="46" y="0" width="1" height="28"/><rect x="49" y="0" width="2" height="28"/><rect x="53" y="0" width="3" height="28"/><rect x="58" y="0" width="1" height="28"/><rect x="61" y="0" width="2" height="28"/><rect x="65" y="0" width="1" height="28"/><rect x="68" y="0" width="3" height="28"/><rect x="73" y="0" width="2" height="28"/><rect x="77" y="0" width="1" height="28"/><rect x="80" y="0" width="2" height="28"/><rect x="84" y="0" width="3" height="28"/><rect x="89" y="0" width="1" height="28"/><rect x="92" y="0" width="2" height="28"/><rect x="96" y="0" width="1" height="28"/><rect x="99" y="0" width="3" height="28"/><rect x="104" y="0" width="2" height="28"/><rect x="108" y="0" width="1" height="28"/><rect x="111" y="0" width="2" height="28"/><rect x="115" y="0" width="3" height="28"/><rect x="120" y="0" width="1" height="28"/><rect x="123" y="0" width="2" height="28"/><rect x="127" y="0" width="1" height="28"/><rect x="130" y="0" width="3" height="28"/><rect x="135" y="0" width="2" height="28"/><rect x="139" y="0" width="1" height="28"/><rect x="142" y="0" width="2" height="28"/><rect x="146" y="0" width="3" height="28"/><rect x="151" y="0" width="1" height="28"/><rect x="154" y="0" width="2" height="28"/><rect x="158" y="0" width="1" height="28"/><rect x="161" y="0" width="3" height="28"/><rect x="166" y="0" width="2" height="28"/><rect x="170" y="0" width="1" height="28"/><rect x="173" y="0" width="2" height="28"/><rect x="177" y="0" width="3" height="28"/><rect x="182" y="0" width="1" height="28"/><rect x="185" y="0" width="2" height="28"/><rect x="189" y="0" width="1" height="28"/><rect x="192" y="0" width="3" height="28"/><rect x="197" y="0" width="2" height="28"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /business -->
+
+      </div>
+    </div>
+
+    <!-- ══════════ IN MY BAG → WORK HISTORY ══════════ -->
+    <div class="page" id="page-bag">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">What's In My Bag</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+
+        <!-- Profile row -->
+        <div onclick="goTo('page-job-elf')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;">
+          <div style="width:48px;height:48px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:11px;font-weight:800;letter-spacing:-0.5px;">e.l.f.</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Anne Teti</div>
+            <div style="font-size:13px;color:var(--gray);">View Full Profile</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- Section gap -->
+        <div style="height:24px;background:var(--light);"></div>
+
+        <!-- e.l.f. Beauty -->
+        <div onclick="goTo('page-job-elf')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;background:white;">
+          <div style="width:44px;height:44px;border-radius:10px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:9px;font-weight:800;letter-spacing:-0.3px;text-align:center;line-height:1.2;">e.l.f.<br>BEAUTY</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">e.l.f. Beauty</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:1px;">CRM &amp; Email Marketing Manager</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:1px;">Oct 2021 – Present · 4 yrs 6 mos</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- Purple -->
+        <div onclick="goTo('page-job-purple')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;background:white;">
+          <div style="width:44px;height:44px;border-radius:10px;background:#6B47DC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:11px;font-weight:800;">purple</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Purple</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:1px;">Email Marketing Manager – Retention</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:1px;">Aug 2020 – Oct 2021 · 1 yr 3 mos</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- ZAGG -->
+        <div onclick="goTo('page-job-zagg')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;background:white;">
+          <div style="width:44px;height:44px;border-radius:10px;background:#c0392b;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:11px;font-weight:800;letter-spacing:0.5px;">ZAGG</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">ZAGG, Inc.</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:1px;">CX Insights &amp; Loyalty Manager</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:1px;">2018 – Aug 2020 · 3 yrs 2 mos</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- LuMee -->
+        <div onclick="goTo('page-job-lumee')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;background:white;">
+          <div style="width:44px;height:44px;border-radius:10px;background:#e8e8e8;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#555;font-size:10px;font-weight:700;">LuMee</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">LuMee</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:1px;">Brand Manager</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:1px;">Jan 2019 – Jan 2020 · 1 yr 1 mo</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- Keel & Curley -->
+        <div onclick="goTo('page-job-keel')" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;background:white;">
+          <div style="width:44px;height:44px;border-radius:10px;background:#2ecc71;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:9px;font-weight:700;text-align:center;line-height:1.3;">Keel &amp;<br>Curley</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Keel &amp; Curley Winery</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:1px;">Marketing &amp; Event Manager</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:1px;">Oct 2016 – Jun 2017 · 9 mos</div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <div style="height:24px;background:var(--light);"></div>
+
+        <!-- Education -->
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);background:white;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">Education</div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#006747;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="color:white;font-size:8px;font-weight:700;text-align:center;line-height:1.3;">USF</span>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:700;color:var(--dark);">University of South Florida</div>
+              <div style="font-size:12px;color:var(--gray);margin-top:1px;">B.A. Communication &amp; Media Studies</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:1px;">2010 – 2014</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:32px;background:var(--light);"></div>
+      </div>
+    </div>
+
+    <!-- ══════════ JOB: E.L.F. BEAUTY ══════════ -->
+    <div class="page" id="page-job-elf">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">e.l.f. Beauty</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:var(--light);padding:24px 20px;text-align:center;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:16px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <span style="color:white;font-size:12px;font-weight:800;letter-spacing:-0.3px;line-height:1.3;text-align:center;">e.l.f.<br>BEAUTY</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:var(--dark);">CRM &amp; Email Marketing Manager</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:4px;">e.l.f. Beauty · Oct 2021 – Present</div>
+          <div style="display:inline-block;background:rgba(255,48,8,0.1);color:var(--red);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;margin-top:8px;">Current Role</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff5f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">📈</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Drove <strong>80% of DTC revenue</strong> through lifecycle marketing programs</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff5f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">📱</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Grew app usage <strong>+125%</strong> in 6 months through targeted engagement campaigns</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff5f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🤖</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Built <strong>7+ AI behavioral cohorts</strong> generating $500K+ revenue from a single AI program</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff5f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🏆</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Won the <strong>Torchie Award '24</strong> for industry recognition</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff5f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">👥</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Managed <strong>5 channels simultaneously</strong> with a team of direct reports</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ JOB: PURPLE ══════════ -->
+    <div class="page" id="page-job-purple">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">Purple</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:var(--light);padding:24px 20px;text-align:center;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:16px;background:#6B47DC;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <span style="color:white;font-size:14px;font-weight:800;">purple</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:var(--dark);">Email Marketing Manager</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:4px;">Purple · Aug 2020 – Oct 2021</div>
+          <div style="display:inline-block;background:#f0f0f0;color:var(--gray);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;margin-top:8px;">Retention Specialist</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f5f0ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🔁</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Led full <strong>retention email strategy</strong> for a fast-growing DTC brand</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f5f0ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">📊</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Built and optimized <strong>lifecycle flows</strong> to increase repeat purchase rate</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f5f0ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🎯</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Developed <strong>segmentation strategy</strong> for personalized customer journeys</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ JOB: ZAGG ══════════ -->
+    <div class="page" id="page-job-zagg">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">ZAGG, Inc.</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:var(--light);padding:24px 20px;text-align:center;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:16px;background:#c0392b;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <span style="color:white;font-size:13px;font-weight:800;letter-spacing:0.5px;">ZAGG</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:var(--dark);">CX Insights &amp; Loyalty Manager</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:4px;">ZAGG, Inc. · 2018 – Aug 2020</div>
+          <div style="display:inline-block;background:#f0f0f0;color:var(--gray);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;margin-top:8px;">+ Social Media &amp; Consumer Insights Coordinator</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">💡</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Built and ran <strong>loyalty program</strong> driving +58% redemption lift YoY</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">📣</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Managed social media &amp; consumer insights across multiple channels</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">📱</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Grew <strong>Replay social share rate to 25%</strong> through community engagement strategy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ JOB: LUMEE ══════════ -->
+    <div class="page" id="page-job-lumee">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">LuMee</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:var(--light);padding:24px 20px;text-align:center;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:16px;background:#e8e8e8;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <span style="color:#555;font-size:12px;font-weight:700;">LuMee</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:var(--dark);">Brand Manager</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:4px;">LuMee · Jan 2019 – Jan 2020</div>
+          <div style="display:inline-block;background:#f0f0f0;color:var(--gray);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;margin-top:8px;">Contract · Park City, Utah</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">✨</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Owned full <strong>brand identity and positioning</strong> for consumer tech accessories brand</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🤝</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Managed <strong>influencer and partnership campaigns</strong> to grow brand awareness</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ JOB: KEEL & CURLEY ══════════ -->
+    <div class="page" id="page-job-keel">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">Keel &amp; Curley Winery</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:var(--light);padding:24px 20px;text-align:center;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:16px;background:#2ecc71;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+            <span style="color:white;font-size:10px;font-weight:700;text-align:center;line-height:1.3;">Keel &amp;<br>Curley</span>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:var(--dark);">Marketing &amp; Event Manager</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:4px;">Keel &amp; Curley Winery · Oct 2016 – Jun 2017</div>
+          <div style="display:inline-block;background:#f0f0f0;color:var(--gray);font-size:11px;font-weight:700;border-radius:100px;padding:4px 12px;margin-top:8px;">First role · Tampa, FL</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Highlights</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f0fff5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🍷</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Managed <strong>marketing and events</strong> for a local winery brand in Tampa</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:8px;background:#f0fff5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">🎉</div>
+              <div style="font-size:13px;color:var(--dark);line-height:1.5;">Planned and executed <strong>consumer-facing events</strong> to drive brand engagement</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ TODAY'S SPECIALS → REWARDS ══════════ -->
+    <div class="page" id="page-specials">
+      <div class="inner-nav" style="justify-content:space-between;">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">My Rewards</div>
+        <div style="background:var(--light);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--dark);">3 earned</div>
+      </div>
+      <div class="page-body" style="padding:0 20px 24px;">
+
+        <!-- Header -->
+        <div style="padding:16px 0 12px;">
+          <div style="font-size:22px;font-weight:800;color:var(--dark);letter-spacing:-0.4px;">My rewards</div>
+          <div style="font-size:13px;color:var(--gray);margin-top:3px;">You've redeemed a total of 8 years of impact.</div>
+        </div>
+
+        <!-- Hero banner -->
+        <div style="background:#3d27c9;border-radius:18px;padding:20px;margin-bottom:24px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-20px;right:-10px;font-size:70px;opacity:0.25;">🏆</div>
+          <div style="font-size:15px;font-weight:700;color:white;line-height:1.4;margin-bottom:14px;position:relative;z-index:1;">Award-winning marketer ready to bring her <br>full toolkit to DoorDash</div>
+          <button onclick="goTo('page-reward-torchie')" style="background:var(--red);color:white;border:none;border-radius:100px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">See highlights →</button>
+        </div>
+
+        <!-- Section: Awards -->
+        <div style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:12px;">Awards &amp; Recognition</div>
+
+        <!-- Torchie Award -->
+        <div onclick="goTo('page-reward-torchie')" style="display:flex;align-items:center;gap:14px;background:white;border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;transition:box-shadow 0.15s;">
+          <div style="width:44px;height:44px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🏆</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--dark);">2024 Braze Torchie Award</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:2px;">Campaign of the Year · e.l.f. Beauty</div>
+            <!-- Progress bar — fully earned -->
+            <div style="margin-top:8px;">
+              <div style="height:4px;background:#f0f0f0;border-radius:100px;overflow:hidden;">
+                <div style="width:100%;height:100%;background:var(--red);border-radius:100px;"></div>
+              </div>
+              <div style="font-size:10px;color:var(--red);font-weight:700;margin-top:3px;">Earned ✓</div>
+            </div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- Section: Case Studies -->
+        <div style="font-size:16px;font-weight:800;color:var(--dark);margin:16px 0 12px;">DoorDash Rewards</div>
+
+        <!-- Case Study 1 - AI -->
+        <div onclick="goTo('page-reward-ai')" style="display:flex;align-items:center;gap:14px;background:white;border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;">
+          <div style="width:44px;height:44px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🤖</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--dark);">Turning one-time buyers into loyal customers with AI</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:2px;">e.l.f. Beauty · Lifecycle &amp; AI</div>
+            <div style="margin-top:8px;">
+              <div style="height:4px;background:#f0f0f0;border-radius:100px;overflow:hidden;">
+                <div style="width:100%;height:100%;background:var(--red);border-radius:100px;"></div>
+              </div>
+              <div style="font-size:10px;color:var(--red);font-weight:700;margin-top:3px;">$500K+ incremental revenue ✓</div>
+            </div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- Case Study 2 - Mobile -->
+        <div onclick="goTo('page-reward-mobile')" style="display:flex;align-items:center;gap:14px;background:white;border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;">
+          <div style="width:44px;height:44px;border-radius:12px;background:#3d8c40;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">📱</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--dark);">Scaling mobile engagement across 5.3M Beauty Squad members</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:2px;">e.l.f. Beauty · Mobile &amp; Loyalty</div>
+            <div style="margin-top:8px;">
+              <div style="height:4px;background:#f0f0f0;border-radius:100px;overflow:hidden;">
+                <div style="width:100%;height:100%;background:var(--red);border-radius:100px;"></div>
+              </div>
+              <div style="font-size:10px;color:var(--red);font-weight:700;margin-top:3px;">+125% app usage in 6 months ✓</div>
+            </div>
+          </div>
+          <div style="font-size:18px;color:var(--gray);">›</div>
+        </div>
+
+        <!-- See more -->
+        <button style="background:var(--light);border:none;border-radius:100px;padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--dark);cursor:pointer;margin-top:6px;">See more deals</button>
+
+      </div>
+    </div>
+
+    <!-- ══════════ REWARD: TORCHIE ══════════ -->
+    <div class="page" id="page-reward-torchie">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">Torchie Award '24</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:#1a1a1a;padding:28px 20px 24px;text-align:center;">
+          <div style="font-size:48px;margin-bottom:10px;">🏆</div>
+          <div style="display:inline-block;background:#c9980a;color:white;font-size:11px;font-weight:700;border-radius:100px;padding:4px 14px;margin-bottom:12px;">2024 Braze Torchie — Campaign of the Year</div>
+          <div style="font-size:20px;font-weight:800;color:white;line-height:1.3;">Scaling mobile engagement across 5.3M Beauty Squad members</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:6px;">e.l.f. Beauty · Mobile &amp; Loyalty</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;color:var(--dark);line-height:1.65;margin-bottom:20px;">Launched new mobile channels, built cross-channel loyalty journeys, and created personalized in-app experiences including a scavenger hunt and a viral year-in-review campaign. Push-enabled users average 500% more daily sessions.</div>
+
+          <!-- Stats row -->
+          <div style="display:flex;gap:10px;margin-bottom:20px;">
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">125%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">App usage in 6 months</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">58%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">YoY loyalty lift</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">25%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">Social share rate</div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Read more</div>
+          <a href="https://www.braze.com/resources/articles/2024-torchie-awards-winners" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:14px 16px;text-decoration:none;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">2024 Torchie Award Winners</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px;">braze.com</div>
+            </div>
+            <div style="font-size:16px;">↗</div>
+          </a>
+          <a href="https://www.braze.com/customers/elf-case-study" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:14px 16px;text-decoration:none;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">e.l.f. Beauty Case Study</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px;">braze.com</div>
+            </div>
+            <div style="font-size:16px;">↗</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ REWARD: AI CASE STUDY ══════════ -->
+    <div class="page" id="page-reward-ai">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">AI &amp; Lifecycle</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:#1a1a1a;padding:28px 20px 24px;text-align:center;">
+          <div style="font-size:48px;margin-bottom:10px;">🤖</div>
+          <div style="display:inline-block;background:#444;color:#ccc;font-size:11px;font-weight:700;border-radius:100px;padding:4px 14px;margin-bottom:12px;">E.L.F. BEAUTY · LIFECYCLE &amp; AI</div>
+          <div style="font-size:20px;font-weight:800;color:white;line-height:1.3;">Turning one-time buyers into loyal customers with AI</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;color:var(--dark);line-height:1.65;margin-bottom:20px;">Found a major drop-off between first and second purchase. Used AI to break customers into 7+ behavioral cohorts and built custom journeys for each — right message, right moment, right channel. Extended to retail partner pages at Target, Walmart, and Ulta.</div>
+
+          <div style="display:flex;gap:10px;margin-bottom:20px;">
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">5%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">Conversion lift 1st to 2nd</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">$500K+</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">Incremental revenue</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">7+</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">AI cohorts built</div>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Read more</div>
+          <a href="https://www.braze.com/customers/elf-case-study" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:14px 16px;text-decoration:none;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">e.l.f. Beauty Case Study — Braze</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px;">braze.com</div>
+            </div>
+            <div style="font-size:16px;">↗</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ REWARD: MOBILE CASE STUDY ══════════ -->
+    <div class="page" id="page-reward-mobile">
+      <div class="inner-nav">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="inner-title">Mobile &amp; Loyalty</div>
+      </div>
+      <div class="page-body" style="padding:0;">
+        <div style="background:#3d8c40;padding:28px 20px 24px;text-align:center;">
+          <div style="font-size:48px;margin-bottom:10px;">📱</div>
+          <div style="display:inline-block;background:rgba(255,255,255,0.2);color:white;font-size:11px;font-weight:700;border-radius:100px;padding:4px 14px;margin-bottom:12px;">E.L.F. BEAUTY · MOBILE &amp; LOYALTY</div>
+          <div style="font-size:20px;font-weight:800;color:white;line-height:1.3;">Scaling mobile engagement across 5.3M Beauty Squad members</div>
+        </div>
+        <div style="padding:20px;">
+          <div style="font-size:13px;color:var(--dark);line-height:1.65;margin-bottom:20px;">Launched new mobile channels, built cross-channel loyalty journeys, and created personalized in-app experiences including a scavenger hunt and a viral year-in-review campaign. Push-enabled users average 500% more daily sessions.</div>
+
+          <div style="display:flex;gap:10px;margin-bottom:20px;">
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">125%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">App usage in 6 months</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">58%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">YoY loyalty lift</div>
+            </div>
+            <div style="flex:1;background:var(--light);border-radius:12px;padding:14px 10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:var(--red);">25%</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:3px;line-height:1.3;">Social share rate</div>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Read more</div>
+          <a href="https://www.glossy.co/beauty/how-e-l-f-cosmetics-drove-a-125-increase-in-monthly-active-app-users/" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:14px 16px;text-decoration:none;margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">How e.l.f. drove a 125% increase in app users</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px;">glossy.co</div>
+            </div>
+            <div style="font-size:16px;">↗</div>
+          </a>
+          <a href="https://www.braze.com/customers/elf-case-study" target="_blank" style="display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:12px;padding:14px 16px;text-decoration:none;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--dark);">e.l.f. Beauty Case Study — Braze</div>
+              <div style="font-size:11px;color:var(--gray);margin-top:2px;">braze.com</div>
+            </div>
+            <div style="font-size:16px;">↗</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MY KITCHEN ══════════ -->
+    <div class="page" id="page-kitchen">
+      <div class="inner-nav" style="background:#1a1a1a;border-bottom:1px solid #333;">
+        <button class="back-btn" onclick="goBack()" style="background:#333;color:white;">←</button>
+        <div class="inner-title" style="color:white;">My Kitchen</div>
+        <div style="width:34px;"></div>
+      </div>
+      <div style="background:#1a1a1a;min-height:100%;padding:20px 16px 40px;">
+
+        <!-- Header -->
+        <div style="margin-bottom:24px;">
+          <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">MY KITCHEN</div>
+          <div style="font-size:28px;font-weight:800;color:white;letter-spacing:-0.5px;line-height:1.2;">Tools I cook with.</div>
+        </div>
+
+        <!-- LIFECYCLE & MESSAGING -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">LIFECYCLE &amp; MESSAGING</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📧</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Braze</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">LIFECYCLE</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📨</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Klaviyo</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">EMAIL</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">💬</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Attentive</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">SMS</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🔔</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Wunderkind</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">TRIGGERED</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">☁️</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Salesforce</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">CRM</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🎯</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Jebbit</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">QUIZ PLATFORM</div>
+          </div>
+        </div>
+
+        <!-- LOYALTY & RETENTION -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">LOYALTY &amp; RETENTION</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🤝</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Talkable</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">REFER A FRIEND</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">👑</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Crowdtwist</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">LOYALTY</div>
+          </div>
+        </div>
+
+        <!-- ACQUISITION -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">ACQUISITION</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🏠</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Updater</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">NEW MOVERS</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📮</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Pebble Post</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">DIRECT MAIL</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">✉️</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">PostPilot</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">DIRECT MAIL</div>
+          </div>
+        </div>
+
+        <!-- AI & PERSONALIZATION -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">AI &amp; PERSONALIZATION</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🧠</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Hightouch</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">AI SEGMENTS</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">⚡</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Dynamic Yield</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">PERSONALIZATION</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🎯</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Action IQ</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">CDP</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🏷️</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Tealium</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">TAG MGMT</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">💎</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Ampliance</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">AI</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🔬</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Heap</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">ANALYTICS</div>
+          </div>
+        </div>
+
+        <!-- ANALYTICS & DATA -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">ANALYTICS &amp; DATA</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🗄️</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">SQL / BigQuery</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">DATA</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📊</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Looker</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">BI</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📈</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Google Analytics</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">WEB</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📋</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Excel / Sheets</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">MODELING</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🛒</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Shopify</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">ECOMMERCE</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">📣</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Meta Ads Mgr</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">PAID</div>
+          </div>
+        </div>
+
+        <!-- CREATIVE -->
+        <div style="font-size:10px;font-weight:700;color:#555;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a2a;">CREATIVE</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🎨</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Canva</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">DESIGN</div>
+          </div>
+          <div style="background:#242424;border-radius:14px;padding:14px 8px;text-align:center;">
+            <div style="font-size:26px;margin-bottom:6px;">🖼️</div>
+            <div style="font-size:12px;font-weight:600;color:white;margin-bottom:3px;">Figma</div>
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.8px;">DESIGN</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /pages -->
+</div><!-- /phone -->
+
+<script>
+  const stack = ['page-home'];
+
+  function goTo(id) {
+    const current = document.querySelector('.page.active');
+    const next = document.getElementById(id);
+    if (!next || current === next) return;
+    current.classList.remove('active');
+    current.classList.add('behind');
+    next.classList.add('active');
+    next.scrollTop = 0;
+    stack.push(id);
+  }
+
+  function switchOrderTab(tab) {
+    const personal = document.getElementById('orders-personal');
+    const business = document.getElementById('orders-business');
+    const btnP = document.getElementById('tab-personal');
+    const btnB = document.getElementById('tab-business');
+    if (tab === 'personal') {
+      personal.style.display = 'block';
+      business.style.display = 'none';
+      btnP.style.background = 'var(--dark)'; btnP.style.color = 'white';
+      btnB.style.background = 'var(--light)'; btnB.style.color = 'var(--dark)';
+    } else {
+      personal.style.display = 'none';
+      business.style.display = 'block';
+      btnB.style.background = 'var(--dark)'; btnB.style.color = 'white';
+      btnP.style.background = 'var(--light)'; btnP.style.color = 'var(--dark)';
+    }
+  }
+
+  function goBack() {
+    if (stack.length <= 1) return;
+    stack.pop();
+    const prevId = stack[stack.length - 1];
+    const current = document.querySelector('.page.active');
+    const prev = document.getElementById(prevId);
+    current.classList.remove('active');
+    prev.classList.remove('behind');
+    prev.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
